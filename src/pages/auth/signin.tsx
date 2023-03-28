@@ -3,7 +3,7 @@ import { getProviders, signIn } from "next-auth/react"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../api/auth/[...nextauth]";
 import styles from '@/styles/Signin.module.css'
-
+import Image from "next/image";
 
 export default function SignIn({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
@@ -16,7 +16,7 @@ export default function SignIn({ providers }: InferGetServerSidePropsType<typeof
               Object.values(providers).map(provider => (
                 <div key={provider.name} style={{ marginBottom: 0 }}>
                   <button onClick={() => signIn(provider.id)} >
-                    <img src='/Google__G__Logo.svg' width="20px" height="20px" alt='Google Logo' style={{marginBottom: '-4px', marginRight: '5px'}}/>
+                    <Image src='/Google__G__Logo.svg'  width="20" height="20" alt='Google Logo' style={{marginBottom: '-4px', marginRight: '8px'}}/>
                     Sign in with{' '} {provider.name}
                   </button>
                 </div>
@@ -25,7 +25,7 @@ export default function SignIn({ providers }: InferGetServerSidePropsType<typeof
         </div>
       </div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src='/login_pattern.svg' alt='Pattern Background' layout='fill' className={styles.styledPattern} />
+      <img src='/login_pattern.svg' alt='Pattern Background' data-layout='fill' className={styles.styledPattern} />
     </div>
   )
 }
