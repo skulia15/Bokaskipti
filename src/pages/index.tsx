@@ -70,7 +70,7 @@ export default function Home() {
               todo <span>-&gt;</span>
             </h2>
             <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
+              This section has changed
             </p>
           </a>
 
