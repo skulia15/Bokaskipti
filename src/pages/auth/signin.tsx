@@ -11,12 +11,13 @@ export default function SignIn({ providers }: InferGetServerSidePropsType<typeof
       <div className={styles.wrapper} />
       <div className={styles.content}>
         <div className={styles.cardWrapper}>
+          <h1>Sign in to StorySwap</h1>
           <div className={styles.cardContent}>
             {providers &&
               Object.values(providers).map(provider => (
                 <div key={provider.name} style={{ marginBottom: 0 }}>
                   <button onClick={() => signIn(provider.id)} >
-                    <Image src='/Google__G__Logo.svg'  width="20" height="20" alt='Google Logo' style={{marginBottom: '-4px', marginRight: '8px'}}/>
+                    <Image src='/Google__G__Logo.svg' width="20" height="20" alt='Google Logo' style={{ marginBottom: '-4px', marginRight: '8px' }} />
                     Sign in with{' '} {provider.name}
                   </button>
                 </div>

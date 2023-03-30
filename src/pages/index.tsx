@@ -124,9 +124,8 @@ export default function Home() {
       </main>
     </>
   }
-  return <>
-    Not signed in <br />
-    <button onClick={() => signIn()}>Sign in</button>
-  </>
-
+  else {
+    () => signIn()
+    return <div>Signing in...</div>
+  }
 }
