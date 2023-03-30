@@ -1,5 +1,6 @@
 import { Todo } from "../../../utils/types"
 import Link from "next/link"
+import { Key } from "react"
 
 // Define the components props
 interface IndexProps {
@@ -17,7 +18,7 @@ function Index(props: IndexProps) {
       <Link href="/todos/create"><button>Create a New Todo</button></Link>
       {/* MAPPING OVER THE TODOS */}
       {todos.map(t => (
-        <div key={t._id}>
+        <div key={t._id as unknown as Key}>
           <Link href={`/todos/${t._id}`}>
             <h3 style={{ cursor: "pointer" }}>
               {t.item} - {t.completed ? "completed" : "incomplete"}
