@@ -1,5 +1,7 @@
 //IMPORT MONGOOSE
+import { ObjectId } from "mongodb"
 import mongoose, { Model } from "mongoose"
+import { User } from "./types"
 
 // CONNECTING TO MONGOOSE (Get Database Url from .env.local)
 const { MONGODB_URI } = process.env
@@ -17,8 +19,27 @@ export const connect = async () => {
     completed: Boolean,
   })
 
+  const UserSchema = new mongoose.Schema({
+    googleId: String,
+    username: String,
+    email: String,
+    firstName: String,
+    lastName: String,
+    address: {
+      street: String,
+      city: String,
+      state: String,
+      postalCode: String,
+      country: String,
+    },
+    wishList: Array<ObjectId>, // Array of book _id references
+    joined: Date
+  })
+
+
   // OUR TODO MODEL
   const Todo = mongoose.models.Todo || mongoose.model("Todo", TodoSchema)
+  const User = mongoose.models.User || mongoose.model("User", UserSchema)
 
-  return { conn, Todo }
+  return { conn, Todo, User }
 }

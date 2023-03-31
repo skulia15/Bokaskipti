@@ -16,7 +16,7 @@ export interface Todo {
 }
 
 export interface User {
-  _id: ObjectId;
+  _id?: string;
   username: string;
   email: string;
   firstName: string;
