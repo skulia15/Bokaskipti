@@ -17,6 +17,7 @@ export interface Todo {
 
 export interface User {
   _id?: string;
+  googleId: string;
   username: string;
   email: string;
   firstName: string;

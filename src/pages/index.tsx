@@ -3,13 +3,24 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import { useSession, signIn, signOut } from "next-auth/react"
+import Link from 'next/link';
 
 const inter = Inter({ subsets: ['latin'] })
 
+// Front page TODOS:
+// 1 Branding: Include your platform's logo, name, and tagline to establish brand identity.
+// 2 Introduction: A brief description or welcome message that highlights the purpose and benefits of using your platform
+// 3 Search bar: A prominent search bar to allow users to quickly search for books by title, author, genre, or keyword.
+// 4 Featured books: Showcase a selection of recently added, or staff-picked books to entice users to explore further.
+// 5 Public Book Requests: Display a few recent public book requests to encourage users to fulfill them.
+// 6 Sign in: A prominent sign in button to allow users to sign in with their Google account. // Logout button
+// 7 How it works: Provide a brief step-by-step guide or an explainer video on how to use your book swapping platform.
+// 8 Social media links: Add icons or links to your platform's social media accounts to encourage users to follow and engage with your brand.
+// 9 Contact information: Include your email address and/or phone number to allow users to contact you with questions or feedback.
+// 10 Terms of Service, Privacy Policy, Help Center, FAQ, and Contact Us.
 export default function Home() {
   const { data: session } = useSession()
-  console.log(session)
-  
+
   return <>
     <Head>
       <title>Bókaskipti</title>
@@ -29,7 +40,12 @@ export default function Home() {
             <button onClick={() => signIn()}>Sign In</button>
           </div>
       }
-
+      <Link href="/book/list-book">
+        List a Book
+      </Link>
+      <Link href="/book/available-books">
+        Available Books
+      </Link>
       <div className={styles.description}>
         <p>
           Get started by editing&nbsp;

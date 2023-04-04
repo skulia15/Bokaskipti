@@ -14,13 +14,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     // RESPONSE FOR GET REQUESTS
     GET: async (req: NextApiRequest, res: NextApiResponse) => {
       debugger
-      console.log('Handle Case Get')
       const { Todo } = await connect() // connect to database
       res.json(await Todo.find({}).catch(catcher))
     },
     // RESPONSE POST REQUESTS
     POST: async (req: NextApiRequest, res: NextApiResponse) => {
-      console.log('Handle Case POST')
       const { Todo } = await connect() // connect to database
       res.json(await Todo.create(req.body).catch(catcher))
     },
