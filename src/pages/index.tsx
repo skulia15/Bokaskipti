@@ -29,25 +29,6 @@ export default function Home() {
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <main className={styles.main}>
-      {
-        (session && session.user) ?
-          <div>
-            Signed in as {session.user.email} <br />
-            <button onClick={() => signOut()}>Sign out</button>
-          </div>
-          :
-          <div>
-            <button onClick={() => signIn()}>Sign In</button>
-          </div>
-      }
-      <Link href="/book/list-book">
-        List a Book
-      </Link>
-      <Link href="/book/available-books">
-        Available Books
-      </Link>
-     
-
       <div className={styles.center}>
         <Image
           className={styles.logo}
