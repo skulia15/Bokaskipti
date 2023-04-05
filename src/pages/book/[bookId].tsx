@@ -1,5 +1,4 @@
 import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
 import axios from 'axios';
 import { IBook } from '@/models/Book';
 import Image from 'next/image';

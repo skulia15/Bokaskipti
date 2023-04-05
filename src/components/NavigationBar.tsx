@@ -11,12 +11,22 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSession, signIn, signOut } from "next-auth/react"
+import styles from '@/styles/NavigationBar.module.css'
+import { useRouter } from 'next/router';
 
-const pages = ['Books', 'Requests', 'Add Book', 'About'];
+interface NavigationMenuItem {
+  page: string;
+  link: string;
+}
+const pages: Array<NavigationMenuItem> = [
+  { page: 'Books', link: "book/available-books" },
+  { page: 'Requests', link: "book/requests" },
+  { page: 'Add Book', link: "book/list-book" },
+  { page: 'About', link: "about" },
+];
 const settings = ['Profile', 'Logout'];
 
 function NavigationBar() {
@@ -24,6 +34,7 @@ function NavigationBar() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const { data: session } = useSession()
+  const router = useRouter()
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -36,10 +47,14 @@ function NavigationBar() {
     if (setting === 'Logout') {
       signOut(); // Call the signOut function from next-auth when 'Logout' is clicked
     }
+    if (setting === 'Profile') {
+      router.push('/profile')
+    }
     handleCloseUserMenu();
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (navClicked: NavigationMenuItem) => {
+    router.push('/' + navClicked.link)
     setAnchorElNav(null);
   };
 
@@ -101,14 +116,14 @@ function NavigationBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              {pages.map((item: NavigationMenuItem) => (
+                <MenuItem key={item.page} onClick={() => handleCloseNavMenu(item)}>
+                  <Typography textAlign="center">{item.page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap
@@ -120,7 +135,7 @@ function NavigationBar() {
               flexGrow: 1,
               fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.3rem',
+              letterSpacing: '.15rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
@@ -128,13 +143,13 @@ function NavigationBar() {
             StorySwap
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {pages.map((item: NavigationMenuItem) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={item.page}
+                onClick={() => handleCloseNavMenu(item)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                {item.page}
               </Button>
             ))}
           </Box>
@@ -142,11 +157,19 @@ function NavigationBar() {
           {session && session.user ?
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={session?.user?.name || 'U'} src="/static/images/avatar/2.jpg" />
-                </IconButton>
+                <div className={styles.profileButton} onClick={handleOpenUserMenu}>
+                  <IconButton sx={{ p: 0 }}>
+                    <Avatar alt={session?.user?.name || 'U'} src={session.user.image || ''} />
+                  </IconButton>
+                  <span className={styles.profileName}>
+                    <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'inline' } }}>
+                      {session?.user?.name}
+                    </Box>
+                  </span>
+                </div>
               </Tooltip>
-              <span>{session?.user?.name}</span>
+
+
               <Menu
                 sx={{ mt: '45px' }}
                 id="menu-appbar"
@@ -164,7 +187,7 @@ function NavigationBar() {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting}  onClick={() => handleSettingClick(setting)}>
+                  <MenuItem key={setting} onClick={() => handleSettingClick(setting)}>
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
