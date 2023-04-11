@@ -19,6 +19,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
         </Head>
         <ThemeProvider theme={darkTheme}>
           <CssBaseline />
+
           <NavigationBar />
           <Component {...pageProps} />
         </ThemeProvider>

@@ -4,10 +4,43 @@ import Link from 'next/link';
 import { IBook } from '@/models/Book';
 import Image from 'next/image';
 import axios from 'axios';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
+import { useRouter } from 'next/router';
 
 interface IAvailableBooksProps {
   books: Array<IBook>;
 }
+const BookItem = ({ book }: { book: IBook }) => {
+  const router = useRouter()
+
+  return (
+    <Card sx={{ maxWidth: 345 }}>
+      <CardActionArea onClick={() => router.push(`/book/${book._id}`)}>
+        <CardMedia
+          component="img"
+          height="140"
+          image={book.coverImageUrl}
+          alt="Book Cover"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {book.title}
+          </Typography>
+          <Typography gutterBottom variant="subtitle1" component="div">
+            {book.author}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {book.description}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
+  );
+};
 
 const AvailableBooks = ({ books }: IAvailableBooksProps) => {
   return (
@@ -18,19 +51,8 @@ const AvailableBooks = ({ books }: IAvailableBooksProps) => {
 
       <h1>Available Books</h1>
       <div>
-        {books.map((book) => (
-          <div key={book._id} style={{height: '200px', width: '400px', border: '1px solid red'}}>
-            <Link href={`/book/${book._id}`}>
-              <h2>{book.title}</h2>
-              <p>Author: {book.author}</p>
-              <p>Genre: {book.genre}</p>
-              <p>Condition: {book.condition}</p>
-              {book.coverImageUrl && (
-                <div style={{ position: 'relative', height: '120px'}}>
-                  <Image src={book.coverImageUrl} alt={book.title} fill style={{ objectFit: 'contain'}} />
-                </div>)}
-            </Link>
-          </div>
+        {books.map((book: IBook) => (
+          <BookItem book={book} key={book._id} />
         ))}
       </div>
     </div>
