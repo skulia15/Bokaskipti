@@ -4,23 +4,26 @@ import axios from 'axios';
 import { IBook } from '@/models/Book';
 import Image from 'next/image';
 import { ParsedUrlQuery } from 'querystring';
+import styles from '@/styles/BookDetail.module.css';
+import { IUser } from '@/models/User';
 
 interface BookDetailProps {
   book: IBook;
+  user: IUser;
 }
 
 
-const BookDetail = ({ book }: BookDetailProps) => {
+const BookDetail = ({ book, user }: BookDetailProps) => {
   return (
-    <div>
+    <div className='container'>
       <h1>{book.title}</h1>
       <h2>Author: {book.author}</h2>
       <h3>Genre: {book.genre}</h3>
       <p>Description: {book.description}</p>
       <p>Condition: {book.condition}</p>
-      <p>Owner: {book.owner}</p>
-      <p>Availability: {book.isAvailable ? 'Available' : 'Not Available'}</p>
-      <Image src={book.coverImageUrl} alt={book.title} height={220} width={150}  style={{ objectFit: 'contain'}} />
+      <p>Owner: {user.username}</p>
+      <p>{book.isAvailable ? 'Available' : 'Not Available'}</p>
+      <Image className={styles.coverImage} src={book.coverImageUrl} alt={book.title} height={180} width={100} />
     </div>
   );
 };
@@ -35,13 +38,21 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       notFound: true,
     };
   }
-  
+
   const { bookId } = context.params as BookIdParams;
   try {
-    const res = await axios.get(`${process.env.API_URL}/books/${bookId}`);
-    const book = res.data;
+    const bookRes = await axios.get(`${process.env.API_URL}/books/${bookId}`);
+    const book = bookRes.data;
+    console.log(book)
+
+    const userRes = await axios.get(`${process.env.API_URL}/users/${book.owner}`);
+    const user = userRes.data;
+    console.log(user)
     return {
-      props: { book },
+      props: {
+        book,
+        user
+      },
     };
   } catch (error) {
     console.error('Error fetching book:', error);

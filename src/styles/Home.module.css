@@ -4,11 +4,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 6rem;
-  padding-top: 6rem;
+  padding-top: 0rem;
   min-height: 100vh;
 }
-
-
 
 .grid {
   display: grid;
@@ -79,6 +77,9 @@
   position: relative;
   width: 100vw;
   height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .imageWrapper {
   z-index: -1;
@@ -114,6 +115,7 @@
   max-width: var(--max-width);
   z-index: 2;
   overflow: hidden;
+  filter: brightness(50%)
 }
 
 .description {

@@ -63,12 +63,9 @@ function NavigationBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Link href="/" style={{ margin: 0, display: 'flex' }}>
-            <Image src='/storySwap.png' alt="StorySwap" width={100} height={68} />
-          </Link>
           {/* <Typography
             variant="h6"
             noWrap
@@ -86,6 +83,9 @@ function NavigationBar() {
           >
             StorySwap
           </Typography> */}
+          <Link href="/" style={{ margin: 0, display: 'flex' }}>
+            <Image src='/storySwap.png' alt="StorySwap" width={100} height={68} />
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -124,7 +124,7 @@ function NavigationBar() {
             </Menu>
           </Box>
           {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
-          <Typography
+          {/* <Typography
             variant="h5"
             noWrap
             component="a"
@@ -141,7 +141,8 @@ function NavigationBar() {
             }}
           >
             StorySwap
-          </Typography>
+          </Typography> */}
+          
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((item: NavigationMenuItem) => (
               <Button
@@ -156,7 +157,7 @@ function NavigationBar() {
 
           {session && session.user ?
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              {/* <Tooltip title="Open settings"> */}
                 <div className={styles.profileButton} onClick={handleOpenUserMenu}>
                   <IconButton sx={{ p: 0 }}>
                     <Avatar alt={session?.user?.name || 'U'} src={session.user.image || ''} />
@@ -167,7 +168,7 @@ function NavigationBar() {
                     </Box>
                   </span>
                 </div>
-              </Tooltip>
+              {/* </Tooltip> */}
 
 
               <Menu
@@ -176,7 +177,7 @@ function NavigationBar() {
                 anchorEl={anchorElUser}
                 anchorOrigin={{
                   vertical: 'top',
-                  horizontal: 'right',
+                  horizontal: 'center',
                 }}
                 keepMounted
                 transformOrigin={{

@@ -1,7 +1,6 @@
 //IMPORT MONGOOSE
 import { ObjectId } from "mongodb"
 import mongoose, { Model } from "mongoose"
-import { User } from "./types"
 
 // CONNECTING TO MONGOOSE (Get Database Url from .env.local)
 const { MONGODB_URI } = process.env

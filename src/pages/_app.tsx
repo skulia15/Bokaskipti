@@ -8,6 +8,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { darkTheme } from '../styles/theme';
 import NavigationBar from '@/components/NavigationBar';
+import Container from '@mui/material/Container';
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
@@ -21,6 +22,12 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
           <CssBaseline />
 
           <NavigationBar />
+          <Container
+            maxWidth="lg"
+            sx={{
+              paddingTop: '69px', // Add a top padding to the main content container
+            }}
+          ></Container>
           <Component {...pageProps} />
         </ThemeProvider>
       </React.Fragment>

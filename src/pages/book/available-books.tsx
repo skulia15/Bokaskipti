@@ -10,6 +10,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { useRouter } from 'next/router';
+import { IGenre } from '@/models/Genre';
 
 interface IAvailableBooksProps {
   books: Array<IBook>;
@@ -44,7 +45,7 @@ const BookItem = ({ book }: { book: IBook }) => {
 
 const AvailableBooks = ({ books }: IAvailableBooksProps) => {
   return (
-    <div>
+    <div className='container'>
       <Head>
         <title>Available Books</title>
       </Head>
@@ -62,12 +63,13 @@ const AvailableBooks = ({ books }: IAvailableBooksProps) => {
 export default AvailableBooks;
 
 export async function getServerSideProps() {
-  const response = await axios.get(process.env.API_URL + '/books');
-  const books = response.data;
+  const bookResponse = await axios.get(process.env.API_URL + '/books');
+  const books = bookResponse.data;
+
 
   return {
     props: {
-      books,
+      books
     },
   };
 }
