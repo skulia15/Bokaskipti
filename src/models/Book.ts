@@ -8,6 +8,7 @@ export interface IBook extends Document {
   condition: string;
   coverImageUrl: string;
   owner: string;
+  publishingYear: string;
   isAvailable: boolean;
 }
 
@@ -19,6 +20,7 @@ const BookSchema: Schema = new Schema({
   condition: { type: String, required: true },
   coverImageUrl: { type: String, required: false },
   owner: { type: String, required: true }, 
+  publishingYear: { type: String, required: false },  // TODO: add publishing year
   // owner: { type: String, ref: "User", required: true },
   isAvailable: { type: Boolean, required: true, default: true },
 });

@@ -3,7 +3,12 @@ import { withAuth } from "next-auth/middleware"
 // More on how NextAuth.js middleware works: https://next-auth.js.org/configuration/nextjs#middleware
 export default withAuth({
   callbacks: {
+
     authorized({ req, token }) {
+      console.log('callback')
+
+      console.log(token)
+
       // `/admin` requires admin role
       if (req.nextUrl.pathname === "/admin") {
         return token?.userRole === "admin"
@@ -14,4 +19,4 @@ export default withAuth({
   },
 })
 
-export const config = { matcher: ["/admin", "/me"] }
+export const config = { matcher: ["/admin", "/me", "/book/list-book"] }

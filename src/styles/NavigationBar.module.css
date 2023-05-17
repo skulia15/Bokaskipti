@@ -11,6 +11,29 @@
   border-radius: 5px;
 }
 
+.navbarItem {
+  width: 100px;
+  color: white;
+  display: flex;
+  flex-flow: column wrap;
+  margin: 0;
+  font-size: 12px;
+}
+
+.navbarItemActive {
+  text-decoration: none;
+  background-color: rgba(144, 202, 249, 0.08);
+}
+
+.navbarIcon {
+  justify-content: center;
+  margin-top: 4px;
+  margin-bottom: 5px;
+  width: 100%;
+}
+.navbarIcon .svg {
+  font-size: 28px;
+}
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   .profileButton:hover {
@@ -19,3 +42,4 @@
     cursor: pointer;
   }
 }
+

@@ -1,0 +1,33 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6rem;
+  padding-top: 6rem;
+  min-height: 100vh;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.bookGrid {
+  justify-content: center;
+}
+
+
+.bookDescription {
+  overflow: ellipsis;
+  text-overflow: ellipsis;
+}

@@ -16,17 +16,28 @@ import Link from 'next/link';
 import { useSession, signIn, signOut } from "next-auth/react"
 import styles from '@/styles/NavigationBar.module.css'
 import { useRouter } from 'next/router';
+import  { SvgIconComponent } from '@mui/icons-material';
+import { ListItemIcon, ListItemText, SvgIconProps } from '@mui/material';
+import ImportContactsOutlinedIcon from '@mui/icons-material/ImportContactsOutlined';
+import LocalLibraryOutlinedIcon from '@mui/icons-material/LocalLibraryOutlined';
+import LibraryAddOutlinedIcon from '@mui/icons-material/LibraryAddOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import TryOutlinedIcon from '@mui/icons-material/TryOutlined';
 
 interface NavigationMenuItem {
   page: string;
   link: string;
+  restricted?: boolean;
+  icon: JSX.Element;
 }
+
 const pages: Array<NavigationMenuItem> = [
-  { page: 'Books', link: "book/available-books" },
-  { page: 'Requests', link: "book/requests" },
-  { page: 'Add Book', link: "book/list-book" },
-  { page: 'About', link: "about" },
+  { page: 'Books', link: "book/available-books", icon: <ImportContactsOutlinedIcon /> },
+  { page: 'Requests', link: "book/requests", icon: <TryOutlinedIcon /> },
+  { page: 'Add Book', link: "book/list-book", restricted: true, icon: <LibraryAddOutlinedIcon /> },
+  { page: 'About', link: "about", icon: <InfoOutlinedIcon /> },
 ];
+
 const settings = ['Profile', 'Logout'];
 
 function NavigationBar() {
@@ -35,6 +46,7 @@ function NavigationBar() {
 
   const { data: session } = useSession()
   const router = useRouter()
+  const currentRoute = router.pathname;
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -116,11 +128,19 @@ function NavigationBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((item: NavigationMenuItem) => (
-                <MenuItem key={item.page} onClick={() => handleCloseNavMenu(item)}>
-                  <Typography textAlign="center">{item.page}</Typography>
-                </MenuItem>
-              ))}
+              {pages.map((item: NavigationMenuItem) => {
+                if (item.restricted && !session) {
+                  return null;
+                }
+                return (
+                  <MenuItem key={item.page} onClick={() => handleCloseNavMenu(item)}>
+                    <Typography textAlign="center">{item.page}</Typography>
+                    {item.icon && <ListItemIcon>
+                      {item.icon}
+                    </ListItemIcon>}
+                  </MenuItem>
+                )
+              })}
             </Menu>
           </Box>
           {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
@@ -142,32 +162,42 @@ function NavigationBar() {
           >
             StorySwap
           </Typography> */}
-          
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((item: NavigationMenuItem) => (
-              <Button
-                key={item.page}
-                onClick={() => handleCloseNavMenu(item)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {item.page}
-              </Button>
-            ))}
+            {pages.map((item: NavigationMenuItem) => {
+              if (item.restricted && !session) {
+                return null;
+              }
+              return (
+                <Button
+                  className={`${styles.navbarItem} ${currentRoute === '/' + item.link ? styles.navbarItemActive : ''}`}	
+                  key={item.page}
+                  onClick={() => handleCloseNavMenu(item)}
+                  sx={{ my: 2 }}
+                >
+                  {item.icon &&
+                    <ListItemIcon className={styles.navbarIcon}> 
+                      {item.icon}
+                    </ListItemIcon>}
+                  {item.page}
+                </Button>
+              )
+            })}
           </Box>
 
           {session && session.user ?
             <Box sx={{ flexGrow: 0 }}>
               {/* <Tooltip title="Open settings"> */}
-                <div className={styles.profileButton} onClick={handleOpenUserMenu}>
-                  <IconButton sx={{ p: 0 }}>
-                    <Avatar alt={session?.user?.name || 'U'} src={session.user.image || ''} />
-                  </IconButton>
-                  <span className={styles.profileName}>
-                    <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'inline' } }}>
-                      {session?.user?.name}
-                    </Box>
-                  </span>
-                </div>
+              <div className={styles.profileButton} onClick={handleOpenUserMenu}>
+                <IconButton sx={{ p: 0 }}>
+                  <Avatar alt={session?.user?.name || 'U'} src={session.user.image || ''} />
+                </IconButton>
+                <span className={styles.profileName}>
+                  <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'inline' } }}>
+                    {session?.user?.name}
+                  </Box>
+                </span>
+              </div>
               {/* </Tooltip> */}
 
 
@@ -200,7 +230,7 @@ function NavigationBar() {
           }
         </Toolbar>
       </Container>
-    </AppBar>
+    </AppBar >
   );
 }
 export default NavigationBar;

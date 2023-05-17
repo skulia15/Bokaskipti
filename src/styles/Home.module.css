@@ -8,6 +8,17 @@
   min-height: 100vh;
 }
 
+.title {
+  font-size: 3rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+.tagline  {
+  font-size: 1.5rem;
+
+}
+
+
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(25%, auto));
@@ -120,11 +131,10 @@
 
 .description {
   padding: 50px;
-
   display: block;
   justify-content: inherit;
   align-items: inherit;
-  font-size: 0.9rem;
+  font-size: 1rem;
   max-width: var(--max-width);
   width: 100%;
   z-index: 2;

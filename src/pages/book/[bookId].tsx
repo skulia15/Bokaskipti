@@ -12,19 +12,32 @@ interface BookDetailProps {
   user: IUser;
 }
 
-
 const BookDetail = ({ book, user }: BookDetailProps) => {
   return (
-    <div className='container'>
-      <h1>{book.title}</h1>
-      <h2>Author: {book.author}</h2>
-      <h3>Genre: {book.genre}</h3>
-      <p>Description: {book.description}</p>
-      <p>Condition: {book.condition}</p>
-      <p>Owner: {user.username}</p>
-      <p>{book.isAvailable ? 'Available' : 'Not Available'}</p>
-      <Image className={styles.coverImage} src={book.coverImageUrl} alt={book.title} height={180} width={100} />
+    <div className={styles.main}>
+      <div className='container'>
+        <div className={styles.bookDetailContainer}>
+          <div className={styles.coverImageContainer}>
+            <Image className={styles.coverImage}
+              src={book.coverImageUrl}
+              alt={book.title}
+              fill
+              // objectFit="cover" // This scales the image nicely to the parent element
+            />
+          </div>
+          <div className={styles.bookInfo}>
+            <h1 className={styles.title}>{book.title}</h1>
+            <p>Author: {book.author}</p>
+            <p>Genre: {book.genre}</p>
+            <p>Description: {book.description}</p>
+            <p>Condition: {book.condition}</p>
+            <p>Owner: {user.username}</p>
+            <p>{book.isAvailable ? 'Available' : 'Not Available'}</p>
+          </div>
+        </div>
+      </div>
     </div>
+
   );
 };
 
